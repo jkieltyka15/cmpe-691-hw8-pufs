@@ -1,7 +1,11 @@
 * puf simulation
 
+******* Library Files *******
 .INCLUDE 'trans_model_nk'
 .INCLUDE 'gate.txt'
+
+******* Simulation Control Options ********* 
+.OPTION POST BRIEF PROBE ACCURATE INGOLD=2 MEASDGT=8
 
 ******* Temperature *********
 .TEMP 45
