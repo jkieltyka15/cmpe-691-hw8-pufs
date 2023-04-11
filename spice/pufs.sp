@@ -150,11 +150,11 @@ xMUX2_L_15 xBUF_L_15_1_out xBUF_L_15_0_out c15 xMUX2_L_15_out VDD VSS MUX2_X1
 * SR Latch
 xBUF_H_SRL xMUX2_H_15_out xBUF_H_SRL_out VDD VSS BUF_X3M
 xBUF_L_SRL xMUX2_L_15_out xBUF_L_SRL_out VDD VSS BUF_X3M
-xSR_LATCH xMUX2_H_SRL_out xMUX2_L_SRL_out q qn VDD VSS SR_LATCH
-CQ xSR_LATCH_Q VSS 10f
-CQN xSR_LATCH_QN VSS 10f
-xBUF_Q xSR_LATCH_Q xBUF_Q_out VDD VSS BUF_X3M
-xBUF_QN xSR_LATCH_QN xBUF_Q_out VDD VSS BUF_X3M
+xSR_LATCH xBUF_H_SRL_out xBUF_L_SRL_out q qn VDD VSS SR_LATCH
+CQ q VSS 10f
+CQN qn VSS 10f
+xBUF_Q q xBUF_Q_out VDD VSS BUF_X3M
+xBUF_QN qn xBUF_Q_out VDD VSS BUF_X3M
 
 .ENDS
 ************************************************************************************************ ARBITER PUF
