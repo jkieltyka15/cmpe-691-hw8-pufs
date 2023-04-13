@@ -2,7 +2,7 @@
 
 ******* library files *******
 .INCLUDE 'trans_model_nk'
-.INCLUDE 'gate.txt'
+.INCLUDE 'ALL_GATES_HSPICE.txt'
 
 ******* simulation control options ********* 
 .OPTION POST BRIEF PROBE ACCURATE INGOLD=2 MEASDGT=8
@@ -14,7 +14,43 @@
 .GLOBAL VDD
 
 ******* parameters *********
-.PARAM LMIN_PV=GAUSS(50E-09,0.1,3), vth_pmos_pv=GAUSS(-0.3021,0.1,1), vth_nmos_pv=GAUSS(0.322,0.1,1), toxm_pmos_pv=GAUSS(1.26E-009,0.01,1), toxm_nmos_pv=GAUSS(1.14E-09,0.01,1)
+.PARAM LMIN=GAUSS(50E-09,0.1,3), LMIN_PV=GAUSS(50E-09,0.1,3), vth_pmos_pv=GAUSS(-0.3021,0.1,1), vth_nmos_pv=GAUSS(0.322,0.1,1), toxm_pmos_pv=GAUSS(1.26E-009,0.01,1), toxm_nmos_pv=GAUSS(1.14E-09,0.01,1)
+
+******** BIG BUF MODEL ***********
+* The subcircuit for BUF
+.SUBCKT BUF_X3M
++ A
++ Z
++ VDD GND
+M_i_2 GND A Z_neg GND NMOS_VTL_pv W=0.630000U L='LMIN_pv'
+M_i_0 Z Z_neg GND GND NMOS_VTL_pv W=1.2450000U L='LMIN_pv'
+M_i_10 VDD A Z_neg VDD PMOS_VTL_pv W=0.945000U L='LMIN_pv'
+M_i_1 Z Z_neg VDD VDD PMOS_VTL_pv W=1.890000U L='LMIN_pv'
+.ENDS
+
+**** MULTIPLEXER *****************
+.SUBCKT MUX2_X1 A B S Z VDD VSS
+*.PININFO A:I B:I S:I Z:O VDD:P VSS:G
+*.EQN Z=((S * B) + (A * !S))
+M_i_10 VSS S x1 VSS NMOS_VTL_pv W=0.210000U L='LMIN_pv'
+M_i_4 net_1 A VSS VSS NMOS_VTL_pv W=0.210000U L='LMIN_pv'
+M_i_5 Z_neg x1 net_1 VSS NMOS_VTL_pv W=0.210000U L='LMIN_pv'
+M_i_2 Z_neg S net_0 VSS NMOS_VTL_pv W=0.210000U L='LMIN_pv'
+M_i_3 net_0 B VSS VSS NMOS_VTL_pv W=0.210000U L='LMIN_pv'
+M_i_0 Z Z_neg VSS VSS NMOS_VTL_pv W=0.415000U L='LMIN_pv'
+M_i_11 VDD S x1 VDD PMOS_VTL_pv W=0.315000U L='LMIN_pv'
+M_i_8 VDD A net_2 VDD PMOS_VTL_pv W=0.315000U L='LMIN_pv'
+M_i_6 net_2 S Z_neg VDD PMOS_VTL_pv W=0.315000U L='LMIN_pv'
+M_i_9 net_3 x1 Z_neg VDD PMOS_VTL_pv W=0.315000U L='LMIN_pv'
+M_i_7 VDD B net_3 VDD PMOS_VTL_pv W=0.315000U L='LMIN_pv'
+M_i_1 Z Z_neg VDD VDD PMOS_VTL_pv W=0.630000U L='LMIN_pv'
+.ENDS
+
+*********** SR Latch************
+.SUBCKT SR_LATCH SI RI Q QN VDDx GNDx
+xNAND2_01 SI QN Q VDDx GNDx NAND2_X1
+xNAND2_02 RI Q QN VDDx GNDx NAND2_X1
+.ENDS
 
 ************************************************************************************************ PUF STAGE
 .SUBCKT PUF_STAGE in_h in_l c_bit out_h out_l VDD VSS
@@ -63,13 +99,13 @@ xBUF_QN qn xBUF_QN_out VDD VSS BUF_X3M
 ************************************************************************************************ ARBITER PUF
 
 ******* transient sweep ********* 
-.TRAN 2n 200n START=0n SWEEP MONTE=8
+.TRAN 0.5n 75n START=0n SWEEP MONTE=8 FIRST=12
 
 ******* power source *******
 Vin VDD GND 1.1
 
 ****** input signal *******
-Vsig edge GND PULSE(0 1.1 0.3 1p 1p 2.5n 5n)
+Vsig edge GND PULSE(0 1.1 0.3n 1p 1p 2.5n 5n)
 
 ******* challenge source *******
 Vc0  c0  GND PWL(0n 1.1 5ns 1.1 5.1n 0 10n 0 10.1n 1.1 15n 1.1 15.1n 1.1 20n 1.1 20.1n 1.1 25n 1.1 25.1n 1.1 30n 1.1 30.1n 1.1 35n 1.1 35.1n 1.1 40n 1.1 40.1n 0 45n 0 45.1n 0 50n 0 50.1n 0 55n 0 55.1n 0 60n 0 60.1n 0 65n 0 65.1n 0 70n 0 70.1n 1.1 75n 1.1)
