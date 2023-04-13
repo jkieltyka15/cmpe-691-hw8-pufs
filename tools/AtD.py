@@ -8,10 +8,9 @@ with open("./PUF_out.txt",'r') as output_file:
 		arr_out = []
 		arr = line.split(" ")
 		for x in arr:
-			fx = float(x)
-			if fx > 0.88:
+			if 'E+' in x:
 				arr_out.append('1')
-			elif fx < 0.22:
+			elif 'E-' in x:
 				arr_out.append('0')
-		print("".join(arr_out))
+		print(" ".join(arr_out))
 			
