@@ -90,8 +90,8 @@ xPUF_STAGE_15 high_14 low_14 c15 high_15 low_15 VDD VSS PUF_STAGE
 xBUF_H_SRL high_15 xBUF_H_SRL_out VDD VSS BUF_X3M
 xBUF_L_SRL low_15  xBUF_L_SRL_out VDD VSS BUF_X3M
 xSR_LATCH xBUF_H_SRL_out xBUF_L_SRL_out q qn VDD VSS SR_LATCH
-CQ  q  VSS 100f
-CQN qn VSS 100f
+CQ  q  VSS 100fF
+CQN qn VSS 100fF
 xBUF_Q  q  xBUF_Q_out  VDD VSS BUF_X3M
 xBUF_QN qn xBUF_QN_out VDD VSS BUF_X3M
 
@@ -99,7 +99,7 @@ xBUF_QN qn xBUF_QN_out VDD VSS BUF_X3M
 ************************************************************************************************ ARBITER PUF
 
 ******* transient sweep ********* 
-.TRAN 0.5n 75n START=0n SWEEP MONTE=8 FIRST=12
+.TRAN 0.5n 75n START=0n SWEEP MONTE=8 FIRST=3
 
 ******* power source *******
 Vin VDD GND 1.1
