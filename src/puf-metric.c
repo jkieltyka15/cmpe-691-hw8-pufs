@@ -16,6 +16,9 @@
 
 int main(int argc, char* argv[]) {
 
+    double sum_of_hd_over_n = 0;
+    double inter_hamming_distance = 0;
+
     int puf[MONTE_CARLOS][CHALLENGES][PUFS];
 
     FILE* metric_file = NULL;
@@ -58,13 +61,13 @@ int main(int argc, char* argv[]) {
         fclose(file);
     }
 
-    // calculate intra hamming distance
+    // intra hamming distance
     fprintf(metric_file, "Intra Hamming Distance:\n");
     for (int i = 0; MONTE_CARLOS > i; i++) {
 
         int m = CHALLENGES - 1;
-        double sum_of_hd_over_n = 0;
         double result = 0;
+        sum_of_hd_over_n = 0;
 
         for (int j = 0; (CHALLENGES - 1) > j; j++) {
 
@@ -79,16 +82,11 @@ int main(int argc, char* argv[]) {
         }
 
         result = (100 / (double)m) * sum_of_hd_over_n;
-        fprintf(metric_file, "PUF %d: %f\n", i + 1, result);
+        fprintf(metric_file, "PUF %d: %f %%\n", i + 1, result);
     }
     fprintf(metric_file, "\n");
 
-    // Inter Hamming Distance
-    fprintf(metric_file, "Inter Hamming Distance:\n");
-
-    fprintf(metric_file, "\n");
-
-    // Uniformity
+    // uniformity
     fprintf(metric_file, "Uniformity:\n");
     for (int i = 0; MONTE_CARLOS > i; i++) {
 
@@ -103,9 +101,33 @@ int main(int argc, char* argv[]) {
             }
         }
 
-        result = (double)hw_sum / ((double)PUFS * (double)CHALLENGES);
-        fprintf(metric_file, "PUF %d: %f\n", i + 1, result);
+        result = (double)hw_sum / ((double)PUFS * (double)CHALLENGES) * 100;
+        fprintf(metric_file, "PUF %d: %f %%\n", i + 1, result);
     }
+    fprintf(metric_file, "\n");
+
+    // inter hamming distance
+    sum_of_hd_over_n = 0;
+    for (int i = 0; MONTE_CARLOS - 1 > i; i++) {
+
+        for (int j = i + 1; MONTE_CARLOS > j; j++) {
+
+            for (int z = 0; CHALLENGES > z; z++) {
+
+                int hd = 0;
+
+                for (int y = 0; PUFS > y; y++) {
+                    if (puf[i][z][y] != puf[j][z][y]) {
+                        hd++;
+                    }
+                }
+
+                sum_of_hd_over_n += ((double)hd / (double)PUFS);
+            }
+        }
+    }
+    inter_hamming_distance = (2 * 100 * sum_of_hd_over_n) / (CHALLENGES * (MONTE_CARLOS * (MONTE_CARLOS - 1)));
+    fprintf(metric_file, "Inter Hamming Distance: %f %%", inter_hamming_distance);
 
     // clean up
     fclose(metric_file);
