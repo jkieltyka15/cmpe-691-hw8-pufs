@@ -1,3 +1,9 @@
+/**
+ * File: puf-metric.c
+ *
+ * Implementation for PUF performance metrics.
+ */
+
 #include <stdio.h>
 #include <stdint.h>
 #include <string.h>
@@ -79,11 +85,27 @@ int main(int argc, char* argv[]) {
 
     // Inter Hamming Distance
     fprintf(metric_file, "Inter Hamming Distance:\n");
+
     fprintf(metric_file, "\n");
 
     // Uniformity
     fprintf(metric_file, "Uniformity:\n");
-    fprintf(metric_file, "\n");
+    for (int i = 0; MONTE_CARLOS > i; i++) {
+
+        double result = 0;
+        int hw_sum = 0;
+
+        for (int j = 0; CHALLENGES > j; j++) {
+            for (int z = 0; PUFS > z; z++) {
+                if (1 == puf[i][j][z]) {
+                    hw_sum++;
+                }
+            }
+        }
+
+        result = (double)hw_sum / ((double)PUFS * (double)CHALLENGES);
+        fprintf(metric_file, "PUF %d: %f\n", i + 1, result);
+    }
 
     // clean up
     fclose(metric_file);
