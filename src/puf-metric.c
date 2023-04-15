@@ -53,6 +53,37 @@ int main(int argc, char* argv[]) {
     }
 
     // calculate intra hamming distance
+    fprintf(metric_file, "Intra Hamming Distance:\n");
+    for (int i = 0; MONTE_CARLOS > i; i++) {
+
+        int m = CHALLENGES - 1;
+        double sum_of_hd_over_n = 0;
+        double result = 0;
+
+        for (int j = 0; (CHALLENGES - 1) > j; j++) {
+
+            int hd = 0;
+
+            for (int z = 0; PUFS > z; z++) {
+                if (puf[i][j][z] != puf[i][j][z+1]) {
+                    hd++;
+                }
+            }
+            sum_of_hd_over_n += ((double)hd / (double)PUFS);
+        }
+
+        result = (100 / (double)m) * sum_of_hd_over_n;
+        fprintf(metric_file, "PUF %d: %f\n", i + 1, result);
+    }
+    fprintf(metric_file, "\n");
+
+    // Inter Hamming Distance
+    fprintf(metric_file, "Inter Hamming Distance:\n");
+    fprintf(metric_file, "\n");
+
+    // Uniformity
+    fprintf(metric_file, "Uniformity:\n");
+    fprintf(metric_file, "\n");
 
     // clean up
     fclose(metric_file);
