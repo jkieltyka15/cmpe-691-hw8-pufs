@@ -15,7 +15,7 @@ HSPICE PUFs Simulation:
 Evaluation Metric:
     1) To build, use command 'make pufmetric' in the 'project root' directory.
     2) To perform metric calculations, use command:
-       './build/bin/dfa ./data/digital_out' 
+       './build/bin/puf-metric ./data/digital_out ./data/metrics.txt' 
        in the 'project root' directory.
     3) Output will be in 'metrics.txt' in the 'data' directory.
 
