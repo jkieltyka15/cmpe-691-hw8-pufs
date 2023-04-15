@@ -7,16 +7,16 @@
   this software is strictly prohibited.
   Input File: pufs.sp                                                           
   Command line options: /umbc/software/synopsys/hspice/R-2020.12-1/hspice/linux64/hspice -i pufs.sp -o pufs.lis
-  Start time: Wed Apr 12 18:19:27 2023
+  Start time: Thu Apr 13 21:14:02 2023
  lic:  
  lic: FLEXlm: SDK_12.9 
  lic: USER:   jkielty1             HOSTNAME: cadence2.cs.umbc.edu 
- lic: HOSTID: 005056950d98         PID:      3828148 
+ lic: HOSTID: 005056950d98         PID:      3999538 
  lic: Using FLEXlm license file: 
  lic: 27020@license5.umbc.edu 
  lic: Checkout 1 hspice 
  lic: License/Maintenance for hspice will expire on 22-feb-2024/2022.06 
- lic: 3(in_use)/100(total) FLOATING license(s) on SERVER 27020@license5.umbc.edu 
+ lic: 1(in_use)/100(total) FLOATING license(s) on SERVER 27020@license5.umbc.edu 
  lic:   
   **warning** (pufs.sp:8) runlvl smaller than 5, reset to 5 when accurate turned on
   **info** Monte Carlo simulation is detected, increase number of measure digits to 7 for Monte Carlo post processing.
@@ -2625,21 +2625,21 @@ y
   ******  Runtime Statistics (seconds)  ******
 
   analysis           time    # points   tot. iter  conv.iter
-  op point           1.57           1          59
-  transient       4854.73        1208      941952      269838 rev=      8621
-  readin             0.02
-  errchk             0.38
-  setup              0.41
+  op point           1.56           1          59
+  transient       4166.47        1208      941952      269838 rev=      8621
+  readin             0.33
+  errchk             0.69
+  setup              0.45
   output             0.04
 
 
-           peak memory used        602.34 megabytes
-           total cpu time         4857.84 seconds
-           total elapsed time     4857.91 seconds
-           job started at     18:19:27 04/12/2023
-           job ended   at     19:40:25 04/12/2023
-           job total runtime      4857.91 seconds
+           peak memory used        602.33 megabytes
+           total cpu time         4170.22 seconds
+           total elapsed time     4170.96 seconds
+           job started at     21:14:02 04/13/2023
+           job ended   at     22:23:33 04/13/2023
+           job total runtime      4170.96 seconds
 
 
  lic: Release hspice token(s) 
- lic: total license checkout elapse time:        0.05(s)
+ lic: total license checkout elapse time:        0.35(s)
